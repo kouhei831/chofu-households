@@ -28,7 +28,9 @@ export default function CityComparison() {
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
   useEffect(() => {
-    d3.csv<CityDatum>('/data/tama-single-households.csv', (row) => ({
+    const dataUrl = new URL('data/tama-single-households.csv', document.baseURI).href;
+
+    d3.csv<CityDatum>(dataUrl, (row) => ({
       code: row.code,
       city: row.city,
       generalHouseholds: Number(row.generalHouseholds),

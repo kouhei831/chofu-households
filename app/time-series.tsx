@@ -30,7 +30,9 @@ export default function TimeSeries() {
   const [hoveredYear, setHoveredYear] = useState<number | null>(null);
 
   useEffect(() => {
-    d3.csv<HistoryDatum>('/data/chofu-household-history.csv', (row) => ({
+    const dataUrl = new URL('data/chofu-household-history.csv', document.baseURI).href;
+
+    d3.csv<HistoryDatum>(dataUrl, (row) => ({
       year: Number(row.year),
       coupleOnly: Number(row.coupleOnly),
       coupleWithChildren: Number(row.coupleWithChildren),
