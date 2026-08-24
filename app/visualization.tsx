@@ -43,25 +43,15 @@ export default function Visualization() {
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow">東京都調布市 / 2020年国勢調査</p>
-          <p className="claim-label">主張</p>
+          <p className="eyebrow">CHOFU / HOUSEHOLD COMPOSITION</p>
+          <p className="hero-question">調布市は本当に「家族で暮らす郊外の街」なのか？</p>
           <h1>
-            調布市の単独世帯は<br />
-            <span>47.5%</span>
+            家族で暮らす郊外の街と見られる調布市だが、<br />
+            2020年には<span>ほぼ2世帯に1世帯</span>が<span className="claim-tail">一人暮らしである。</span>
           </h1>
-          <p className="hero-lead">
-            2020年の調布市では、一般世帯120,790世帯のうち57,424世帯が、
-            1人で暮らす単独世帯だった。
-          </p>
-          <div className="intro-facts">
-            <div className="question-card">
-              <span>問い</span>
-              <p>調布市の単独世帯割合は、東京都26市の中でどの位置にあり、1995年からどう変化したのか？</p>
-            </div>
-            <div className="question-card purpose-card">
-              <span>目的</span>
-              <p>他市との比較と25年間の推移から、調布市の世帯構成の特徴を確認する。</p>
-            </div>
+          <div className="purpose-statement">
+            <strong>問いの目的：</strong>
+            <p>調布市を「家族世帯が中心の郊外住宅地」と何となく捉えるのではなく、実際の世帯構成とその変化を知ることで、現在の調布市に暮らす人々の姿を捉え直す。</p>
           </div>
         </div>
 
@@ -90,11 +80,11 @@ export default function Visualization() {
           <span className="section-number">01 / 比較</span>
           <div>
             <p className="section-kicker">東京都26市の比較</p>
-            <h2>調布市は、単独世帯割合が<span>5番目</span>に高い。</h2>
+            <h2>調布市の単独世帯率は、<span>東京都26市の中でも高い。</span></h2>
           </div>
           <p>
-            2020年の26市中央値は41.5%。調布市の47.5%は、中央値を6.0ポイント上回る。
-            各市は同じ国勢調査の一般世帯数と単独世帯数で比較した。
+            2020年の国勢調査で東京都の26市を比べると、調布市の単独世帯率47.5%は5位だった。
+            26市の中央値41.5%を6.0ポイント上回り、一人暮らしが調布市の世帯構成の大きな特徴であることがわかる。
           </p>
         </div>
         <div className="finding-strip">
@@ -115,25 +105,27 @@ export default function Visualization() {
           <span className="section-number">02 / 時間</span>
           <div>
             <p className="section-kicker">25年間の変化</p>
-            <h2>1995年の41.0%から、<span>2020年の47.5%へ上昇した。</span></h2>
+            <h2>一人暮らしは増え、<span>「夫婦と子ども」の世帯は減ってきた。</span></h2>
           </div>
           <p>
-            5年ごとの6時点すべてで、前回調査を上回った。
-            年を選ぶと、その年の家族類型別構成を確認できる。
+            1995年から2020年に、単独世帯は41.0%から47.5%へ6.5ポイント上昇した。
+            一方、「夫婦と子ども」の世帯は29.9%から24.1%へ5.8ポイント低下した。
           </p>
         </div>
         <TimeSeries />
       </section>
 
       <section className="conclusion-section">
-        <p className="section-kicker">わかったこと</p>
+        <p className="section-kicker">結論</p>
         <h2>
-          調布市では、単独世帯が一般世帯の47.5%を占める。<br />
-          <span>割合は1995年から2020年までに6.5ポイント上昇した。</span>
+          調布市は、<br />
+          <span>「家族で暮らす郊外の街」だけでは捉えきれない。</span>
         </h2>
         <p>
-          この割合の分母は一般世帯であり、人口ではない。
-          「住民の47.5%が一人暮らし」という意味ではない点に注意が必要である。
+          2020年には一般世帯の47.5%が単独世帯で、その割合は東京都26市中5位だった。
+          さらに1995年以降、単独世帯が増える一方で「夫婦と子ども」の世帯は減っている。
+          つまり、一人暮らしは例外的な存在ではなく、現在の調布市を形づくる主要な暮らし方の一つである。
+          ただし、47.5%は世帯の割合であり、住民の47.5%という意味ではない。
         </p>
       </section>
 

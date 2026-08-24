@@ -20,6 +20,11 @@ const categories: Array<{ key: keyof Omit<HistoryDatum, 'year'>; label: string }
   { key: 'other', label: 'その他' },
 ];
 
+const trendSeries = [
+  { key: 'single' as const, label: '単独世帯' },
+  { key: 'coupleWithChildren' as const, label: '夫婦と子ども' },
+];
+
 export default function TimeSeries() {
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<SVGSVGElement>(null);
@@ -64,10 +69,10 @@ export default function TimeSeries() {
       .domain(data.map((datum) => datum.year))
       .range([0, innerWidth])
       .padding(.15);
-    const y = d3.scaleLinear().domain([38, 50]).range([innerHeight, 0]);
-    const line = d3.line<HistoryDatum>()
+    const y = d3.scaleLinear().domain([20, 55]).range([innerHeight, 0]);
+    const lineFor = (key: 'single' | 'coupleWithChildren') => d3.line<HistoryDatum>()
       .x((datum) => x(datum.year) ?? 0)
-      .y((datum) => y(datum.single))
+      .y((datum) => y(datum[key]))
       .curve(d3.curveMonotoneX);
 
     const svg = d3.select(lineRef.current).attr('viewBox', `0 0 ${width} ${height}`);
@@ -81,7 +86,7 @@ export default function TimeSeries() {
       .data([null])
       .join('g')
       .attr('class', 'time-y-axis chart-axis chart-grid')
-      .call(d3.axisLeft(y).ticks(4).tickSize(-innerWidth).tickFormat((value) => `${value}%`));
+      .call(d3.axisLeft(y).ticks(7).tickSize(-innerWidth).tickFormat((value) => `${value}%`));
     root.selectAll<SVGGElement, null>('.time-x-axis')
       .data([null])
       .join('g')
@@ -106,19 +111,20 @@ export default function TimeSeries() {
       .attr('text-anchor', 'end')
       .text('2世帯に1世帯 = 50%');
 
-    root.selectAll<SVGPathElement, HistoryDatum[]>('.time-line')
-      .data([data])
+    root.selectAll<SVGPathElement, typeof trendSeries[number]>('.time-series-line')
+      .data(trendSeries, (series) => series.key)
       .join('path')
-      .attr('class', 'time-line')
-      .attr('d', line);
+      .attr('class', (series) => `time-series-line time-line-${series.key}`)
+      .attr('d', (series) => lineFor(series.key)(data));
 
-    root.selectAll<SVGCircleElement, HistoryDatum>('.time-point')
-      .data(data, (datum) => datum.year)
+    const pointData = data.flatMap((datum) => trendSeries.map((series) => ({ datum, series })));
+    root.selectAll<SVGCircleElement, typeof pointData[number]>('.time-series-point')
+      .data(pointData, ({ datum, series }) => `${series.key}-${datum.year}`)
       .join('circle')
-      .attr('class', (datum) => datum.year === activeYear ? 'time-point is-active' : 'time-point')
-      .attr('cx', (datum) => x(datum.year) ?? 0)
-      .attr('cy', (datum) => y(datum.single))
-      .attr('r', (datum) => datum.year === activeYear ? 7 : 4.5);
+      .attr('class', ({ datum, series }) => `time-series-point time-point-${series.key}${datum.year === activeYear ? ' is-active' : ''}`)
+      .attr('cx', ({ datum }) => x(datum.year) ?? 0)
+      .attr('cy', ({ datum, series }) => y(datum[series.key]))
+      .attr('r', ({ datum }) => datum.year === activeYear ? 6.5 : 4.5);
 
     root.selectAll<SVGCircleElement, HistoryDatum>('.time-hit')
       .data(data, (datum) => datum.year)
@@ -140,14 +146,19 @@ export default function TimeSeries() {
       });
 
     const activeDatum = data.find((datum) => datum.year === activeYear)!;
-    root.selectAll<SVGTextElement, HistoryDatum>('.time-value')
-      .data([activeDatum])
+    const activeLabels = trendSeries.map((series) => ({
+      ...series,
+      datum: activeDatum,
+      value: activeDatum[series.key],
+    }));
+    root.selectAll<SVGTextElement, typeof activeLabels[number]>('.time-value')
+      .data(activeLabels, (series) => series.key)
       .join('text')
-      .attr('class', 'time-value')
-      .attr('x', (datum) => x(datum.year) ?? 0)
-      .attr('y', (datum) => y(datum.single) - 17)
+      .attr('class', (series) => `time-value time-value-${series.key}`)
+      .attr('x', ({ datum }) => x(datum.year) ?? 0)
+      .attr('y', ({ value, key }) => y(value) + (key === 'single' ? -16 : 21))
       .attr('text-anchor', activeDatum.year === 2020 ? 'end' : activeDatum.year === 1995 ? 'start' : 'middle')
-      .text((datum) => `${datum.single.toFixed(1)}%`);
+      .text(({ label, value }) => `${label} ${value.toFixed(1)}%`);
   }, [activeYear, data, width]);
 
   useEffect(() => {
@@ -171,9 +182,14 @@ export default function TimeSeries() {
   return (
     <div className="time-layout">
       <div className="time-chart-card">
-        <div ref={containerRef} className="time-chart-wrap">
-          <svg ref={lineRef} className="time-chart" role="img" aria-label="1995年から2020年までの調布市の単独世帯割合を示す折れ線グラフ" />
+        <div className="time-series-legend" aria-hidden="true">
+          <span><i className="legend-single" />単独世帯</span>
+          <span><i className="legend-coupleWithChildren" />夫婦と子ども</span>
         </div>
+        <div ref={containerRef} className="time-chart-wrap">
+          <svg ref={lineRef} className="time-chart" role="img" aria-label="1995年から2020年までの調布市の単独世帯と夫婦と子どもの世帯割合を示す折れ線グラフ" />
+        </div>
+        <p className="time-chart-caption">25年間で、単独世帯は6.5ポイント増え、「夫婦と子ども」の世帯は5.8ポイント減った。</p>
         <div className="year-selector" role="group" aria-label="表示する国勢調査年">
           {data.map((datum) => (
             <button key={datum.year} type="button" className={selectedYear === datum.year ? 'is-selected' : ''} onClick={() => setSelectedYear(datum.year)}>
