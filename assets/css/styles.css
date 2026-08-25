@@ -7,6 +7,8 @@
   --coral: #e05d42;
   --coral-dark: #bd452e;
   --sage: #5e7d76;
+  --single: #0c6f9f;
+  --family: #a94f12;
   --sans: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
 }
 
@@ -282,7 +284,7 @@ h1 span::after {
 }
 
 .stat-number {
-  color: var(--coral-dark);
+  color: var(--single);
   font-family: Arial, Helvetica, sans-serif;
   font-size: clamp(86px, 10vw, 142px);
   font-weight: 800;
@@ -290,7 +292,7 @@ h1 span::after {
 }
 
 .stat-unit {
-  color: var(--coral-dark);
+  color: var(--single);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 34px;
   font-weight: 800;
@@ -317,7 +319,7 @@ h1 span::after {
 }
 
 .waffle-cell.is-single {
-  fill: var(--coral);
+  fill: var(--single);
 }
 
 .waffle-legend {
@@ -345,7 +347,7 @@ h1 span::after {
 }
 
 .waffle-legend .legend-single {
-  background: var(--coral);
+  background: var(--single);
 }
 
 .scroll-cue {
@@ -744,26 +746,23 @@ a.scroll-cue {
   display: none;
 }
 
-.city-stem {
-  stroke: #dedfd9;
-  stroke-width: 1.5;
-}
-
-.city-dot {
-  fill: #9fa9a6;
+.city-track {
+  fill: #ecebe5;
   pointer-events: none;
 }
 
-.city-dot.is-active {
-  fill: var(--ink);
-  stroke: white;
-  stroke-width: 2;
+.city-bar {
+  fill: #8aa1aa;
+  pointer-events: none;
 }
 
-.city-dot.is-chofu {
+.city-bar.is-active {
+  fill: var(--ink);
+}
+
+.city-bar.is-chofu,
+.city-bar.is-chofu.is-active {
   fill: var(--coral);
-  stroke: white;
-  stroke-width: 2.5;
 }
 
 .city-hit,
@@ -773,10 +772,16 @@ a.scroll-cue {
 }
 
 .city-value-label {
-  fill: var(--ink);
+  fill: var(--muted);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9.5px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.city-value-label.is-active {
+  fill: var(--ink);
+  font-weight: 800;
 }
 
 .city-value-label.is-chofu {
@@ -870,12 +875,18 @@ a.scroll-cue {
   stroke-width: 4;
 }
 
+.time-gap-area {
+  fill: color-mix(in srgb, var(--single) 10%, transparent);
+  pointer-events: none;
+}
+
 .time-line-single {
-  stroke: var(--coral);
+  stroke: var(--single);
 }
 
 .time-line-coupleWithChildren {
-  stroke: var(--sage);
+  stroke: var(--family);
+  stroke-dasharray: 9 6;
 }
 
 .time-series-point {
@@ -885,21 +896,21 @@ a.scroll-cue {
 }
 
 .time-point-single {
-  stroke: var(--coral);
+  stroke: var(--single);
 }
 
 .time-point-coupleWithChildren {
-  stroke: var(--sage);
+  stroke: var(--family);
 }
 
 .time-point-single.is-active {
-  fill: var(--coral);
+  fill: var(--single);
   stroke: white;
   stroke-width: 2;
 }
 
 .time-point-coupleWithChildren.is-active {
-  fill: var(--sage);
+  fill: var(--family);
   stroke: white;
   stroke-width: 2;
 }
@@ -922,11 +933,11 @@ a.scroll-cue {
 }
 
 .time-value-single {
-  fill: var(--coral-dark);
+  fill: var(--single);
 }
 
 .time-value-coupleWithChildren {
-  fill: var(--sage);
+  fill: var(--family);
 }
 
 .time-series-legend {
@@ -991,7 +1002,7 @@ a.scroll-cue {
 }
 
 .detail-stat strong {
-  color: var(--coral-dark);
+  color: var(--single);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 64px;
   letter-spacing: -.06em;
@@ -999,7 +1010,7 @@ a.scroll-cue {
 }
 
 .detail-stat span {
-  color: var(--coral-dark);
+  color: var(--single);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 21px;
   font-weight: 800;
@@ -1047,12 +1058,12 @@ a.scroll-cue {
 
 .segment-single,
 .legend-single {
-  background: var(--coral);
+  background: var(--single);
 }
 
 .segment-coupleWithChildren,
 .legend-coupleWithChildren {
-  background: var(--sage);
+  background: var(--family);
 }
 
 .segment-coupleOnly,

@@ -4,7 +4,7 @@ const viewport = {
     time: {width: 720, height: 410}
 };
 
-const comparisonMargin = {top: 42, right: 54, bottom: 52, left: 104};
+const comparisonMargin = {top: 42, right: 76, bottom: 52, left: 104};
 const timeMargin = {top: 38, right: 54, bottom: 52, left: 62};
 
 /* --- データセット --- */
@@ -80,14 +80,14 @@ function getWindowSize() {
     viewport.comparison.height = (
         comparisonMargin.top
         + comparisonMargin.bottom
-        + (viewport.comparison.width < 640 ? 26 : 28) * dataAll.cities.length
+        + (viewport.comparison.width < 640 ? 28 : 30) * dataAll.cities.length
     );
 
     viewport.time.width = Math.max(320, Math.round(timeWrap.getBoundingClientRect().width));
     viewport.time.height = viewport.time.width < 560 ? 330 : 410;
 
     comparisonMargin.left = viewport.comparison.width < 640 ? 78 : 104;
-    comparisonMargin.right = viewport.comparison.width < 640 ? 26 : 54;
+    comparisonMargin.right = viewport.comparison.width < 640 ? 50 : 76;
     timeMargin.left = viewport.time.width < 560 ? 48 : 62;
     timeMargin.right = viewport.time.width < 560 ? 24 : 54;
 }
@@ -194,7 +194,7 @@ function setScales() {
     }) || 1;
 
     comparisonXScale
-        .domain(state.metric === "share" ? [0, 55] : [0, comparisonMax * 1.05])
+        .domain(state.metric === "share" ? [0, 60] : [0, comparisonMax * 1.18])
         .range([0, comparisonInnerWidth]);
 
     comparisonYScale
@@ -307,39 +307,59 @@ function renderComparison() {
     const duration = getReducedMotionDuration(500);
     const transition = d3.transition().duration(duration).ease(d3.easeCubicOut);
 
-    root.selectAll(".city-stem")
-        .data(sortedCities, function(d) { return d.code; })
-        .join("line")
-        .attr("class", "city-stem")
-        .attr("x1", comparisonXScale(0))
-        .attr("y1", function(d) {
-            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2;
-        })
-        .attr("y2", function(d) {
-            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2;
-        })
-        .transition(transition)
-        .attr("x2", function(d) { return comparisonXScale(d[metric.accessor]); });
+    const barHeight = Math.max(10, Math.min(17, comparisonYScale.bandwidth() * 0.72));
+    const barStart = comparisonXScale(0);
+    const barTrackWidth = comparisonXScale.range()[1] - barStart;
 
-    root.selectAll(".city-dot")
+    root.selectAll(".city-track")
         .data(sortedCities, function(d) { return d.code; })
-        .join("circle")
-        .attr("class", "city-dot")
-        .attr("cy", function(d) {
-            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2;
+        .join("rect")
+        .attr("class", "city-track")
+        .attr("x", barStart)
+        .attr("y", function(d) {
+            return comparisonYScale(d.city) + (comparisonYScale.bandwidth() - barHeight) / 2;
         })
+        .attr("width", barTrackWidth)
+        .attr("height", barHeight)
+        .attr("rx", barHeight / 2);
+
+    root.selectAll(".city-bar")
+        .data(sortedCities, function(d) { return d.code; })
+        .join("rect")
+        .attr("class", "city-bar")
+        .attr("x", barStart)
+        .attr("y", function(d) {
+            return comparisonYScale(d.city) + (comparisonYScale.bandwidth() - barHeight) / 2;
+        })
+        .attr("height", barHeight)
+        .attr("rx", barHeight / 2)
         .transition(transition)
-        .attr("cx", function(d) { return comparisonXScale(d[metric.accessor]); });
+        .attr("width", function(d) {
+            return Math.max(1, comparisonXScale(d[metric.accessor]) - barStart);
+        });
+
+    root.selectAll(".city-value-label")
+        .data(sortedCities, function(d) { return d.code; })
+        .join("text")
+        .attr("class", "city-value-label")
+        .attr("x", function(d) { return comparisonXScale(d[metric.accessor]) + 8; })
+        .attr("y", function(d) {
+            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2 + 3.5;
+        })
+        .text(function(d) {
+            return state.metric === "share"
+                ? formatShare(d.singleShare)
+                : formatInteger.format(d.singleHouseholds);
+        });
 
     root.selectAll(".city-hit")
         .data(sortedCities, function(d) { return d.code; })
-        .join("circle")
+        .join("rect")
         .attr("class", "city-hit")
-        .attr("r", 12)
-        .attr("cx", function(d) { return comparisonXScale(d[metric.accessor]); })
-        .attr("cy", function(d) {
-            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2;
-        })
+        .attr("x", 0)
+        .attr("y", function(d) { return comparisonYScale(d.city); })
+        .attr("width", barTrackWidth)
+        .attr("height", comparisonYScale.bandwidth())
         .attr("tabindex", 0)
         .attr("role", "button")
         .attr("aria-label", function(d) {
@@ -377,36 +397,20 @@ function updateComparisonHighlight() {
     }
 
     const root = d3.select("#comparisonChart").select(".comparison-root");
-    root.selectAll(".city-dot")
+    root.selectAll(".city-bar")
         .attr("class", function(d) {
-            const classes = ["city-dot"];
+            const classes = ["city-bar"];
             if (d.city === "調布市") classes.push("is-chofu");
             if (d.city === activeCityName) classes.push("is-active");
             return classes.join(" ");
-        })
-        .attr("r", function(d) {
-            if (d.city === "調布市") return 7;
-            return d.city === activeCityName ? 6.5 : 4.3;
         });
 
-    const labels = dataAll.cities.filter(function(d) {
-        return d.city === "調布市" || d.city === activeCityName;
-    });
-
     root.selectAll(".city-value-label")
-        .data(labels, function(d) { return d.code; })
-        .join("text")
         .attr("class", function(d) {
-            return d.city === "調布市" ? "city-value-label is-chofu" : "city-value-label";
-        })
-        .attr("x", function(d) { return comparisonXScale(d[metric.accessor]) + 11; })
-        .attr("y", function(d) {
-            return comparisonYScale(d.city) + comparisonYScale.bandwidth() / 2 + 4;
-        })
-        .text(function(d) {
-            return state.metric === "share"
-                ? formatShare(d.singleShare)
-                : formatInteger.format(d.singleHouseholds);
+            const classes = ["city-value-label"];
+            if (d.city === "調布市") classes.push("is-chofu");
+            if (d.city === activeCityName) classes.push("is-active");
+            return classes.join(" ");
         });
 
     const activeValue = state.metric === "share"
@@ -493,6 +497,18 @@ function renderTimeSeries() {
         .attr("y", function(value) { return timeYScale(value) - 9; })
         .attr("text-anchor", "end")
         .text("2世帯に1世帯 = 50%");
+
+    const gapArea = d3.area()
+        .x(function(d) { return timeXScale(d.year); })
+        .y0(function(d) { return timeYScale(d.coupleWithChildren); })
+        .y1(function(d) { return timeYScale(d.single); })
+        .curve(d3.curveMonotoneX);
+
+    root.selectAll(".time-gap-area")
+        .data([dataAll.history])
+        .join("path")
+        .attr("class", "time-gap-area")
+        .attr("d", gapArea);
 
     function lineFor(key) {
         return d3.line()
