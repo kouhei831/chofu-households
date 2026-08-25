@@ -600,7 +600,7 @@ function updateTimeHighlight() {
         .attr("x", function(d) { return timeXScale(d.datum.year); })
         .attr("y", function(d) {
             if (d.key === "single") return timeYScale(d.value) - 16;
-            return timeYScale(d.value) + (active.year === 1995 ? 49 : 21);
+            return active.year === 1995 ? timeYScale(25) : timeYScale(d.value) + 21;
         })
         .attr("text-anchor", active.year === 2020 ? "end" : (active.year === 1995 ? "start" : "middle"))
         .text(function(d) { return `${d.label} ${d.value.toFixed(1)}%`; });
