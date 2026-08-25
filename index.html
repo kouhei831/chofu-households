@@ -1,21 +1,229 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="家族で暮らす郊外の街と見られる調布市で、2020年にはほぼ2世帯に1世帯が一人暮らしだった。東京都26市との比較と25年間の変化から確かめる。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="調布市では、ほぼ2世帯に1世帯が一人暮らし" />
-    <meta property="og:description" content="『家族で暮らす郊外の街』という見方を、東京都26市比較と25年間の変化から捉え直す。" />
-    <meta property="og:image" content="https://kouhei831.github.io/chofu-households/og.png" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://kouhei831.github.io/chofu-households/" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="家族で暮らす郊外の街と見られる調布市で、2020年にはほぼ2世帯に1世帯が一人暮らしだった。東京都26市との比較と25年間の変化から確かめる。">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="調布市では、ほぼ2世帯に1世帯が一人暮らし">
+    <meta property="og:description" content="『家族で暮らす郊外の街』という見方を、東京都26市比較と25年間の変化から捉え直す。">
+    <meta property="og:image" content="https://kouhei831.github.io/chofu-households/assets/images/og.png">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://kouhei831.github.io/chofu-households/">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <title>調布市では、ほぼ2世帯に1世帯が一人暮らし｜世帯構成の比較と変化</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+</head>
+
+<body>
+    <main>
+        <header class="site-header">
+            <a class="brand" href="#top" aria-label="ページ先頭へ">
+                <span class="brand-mark" aria-hidden="true">調</span>
+                <span>CHOFU / HOUSEHOLDS</span>
+            </a>
+            <nav class="site-nav" aria-label="ページ内ナビゲーション">
+                <a href="#compare">26市比較</a>
+                <a href="#history">25年の変化</a>
+                <a href="#method">データと出典</a>
+            </nav>
+            <span class="data-chip">国勢調査 1995-2020</span>
+        </header>
+
+        <section class="hero" id="top">
+            <div class="hero-copy">
+                <p class="eyebrow">CHOFU / HOUSEHOLD COMPOSITION</p>
+                <p class="hero-question">調布市は本当に「家族で暮らす郊外の街」なのか？</p>
+                <h1>
+                    家族で暮らす郊外の街と見られる調布市だが、<br>
+                    2020年には<span>ほぼ2世帯に1世帯</span>が<span class="claim-tail">一人暮らしである。</span>
+                </h1>
+                <div class="purpose-statement">
+                    <strong>問いの目的：</strong>
+                    <p>調布市を「家族世帯が中心の郊外住宅地」と何となく捉えるのではなく、実際の世帯構成とその変化を知ることで、現在の調布市に暮らす人々の姿を捉え直す。</p>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="stat-lockup">
+                    <span class="stat-number">47.5</span>
+                    <span class="stat-unit">%</span>
+                </div>
+                <p class="stat-caption">単独世帯の割合 / 2020年</p>
+                <svg id="heroWaffle" class="waffle" viewBox="0 0 253 253" role="img" aria-label="100世帯のうち、およそ48世帯が単独世帯であることを示す図"></svg>
+                <div class="waffle-legend" aria-hidden="true">
+                    <span><i class="legend-single"></i>単独世帯</span>
+                    <span><i></i>その他の世帯</span>
+                </div>
+                <p class="definition-note">単独世帯 = 世帯人員が1人の一般世帯</p>
+            </div>
+        </section>
+
+        <a class="scroll-cue" href="#compare">
+            <span>26市の中で比べる</span>
+            <i aria-hidden="true"></i>
+        </a>
+
+        <section class="story-section comparison-section" id="compare">
+            <div class="section-heading">
+                <span class="section-number">01 / 比較</span>
+                <div>
+                    <p class="section-kicker">東京都26市の比較</p>
+                    <h2>調布市の単独世帯率は、<span>東京都26市の中でも高い。</span></h2>
+                </div>
+                <p>
+                    2020年の国勢調査で東京都の26市を比べると、調布市の単独世帯率47.5%は5位だった。
+                    26市の中央値41.5%を6.0ポイント上回り、一人暮らしが調布市の世帯構成の大きな特徴であることがわかる。
+                </p>
+            </div>
+
+            <div class="finding-strip">
+                <div><strong>47.5%</strong><span>調布市</span></div>
+                <span class="finding-arrow" aria-hidden="true">−</span>
+                <div><strong>41.5%</strong><span>26市中央値</span></div>
+                <p><b>+6.0ポイント</b>、中央値を上回る。</p>
+            </div>
+
+            <div class="comparison-card">
+                <div class="chart-controls">
+                    <div class="metric-toggle" role="group" aria-label="比較する指標">
+                        <button type="button" class="is-selected" data-metric="share">割合で比較</button>
+                        <button type="button" data-metric="count">世帯数で比較</button>
+                    </div>
+                    <label class="city-select">
+                        比較相手
+                        <select id="citySelect"></select>
+                    </label>
+                </div>
+
+                <div class="active-city-summary" aria-live="polite">
+                    <div>
+                        <span class="summary-kicker" id="activeCityName">読み込み中</span>
+                        <strong id="activeCityValue">...</strong>
+                    </div>
+                    <div>
+                        <span class="summary-kicker">多摩26市で</span>
+                        <strong id="activeCityRank">...</strong>
+                    </div>
+                    <p id="activeCityNote">データを読み込んでいます。</p>
+                </div>
+
+                <div id="comparisonChartWrap" class="comparison-chart-wrap">
+                    <svg id="comparisonChart" class="comparison-chart" role="img" aria-label="多摩26市の単独世帯を比較するドットプロット"></svg>
+                </div>
+                <p class="interaction-note">市名を選ぶか、点に触れると正確な値を比較できます。</p>
+            </div>
+
+            <div class="reading-note">
+                <strong>割合と実数</strong>
+                <p>割合は世帯構成、実数は都市規模の影響を含む。上の切り替えで両方を確認できる。</p>
+            </div>
+        </section>
+
+        <section class="story-section history-section" id="history">
+            <div class="section-heading inverse">
+                <span class="section-number">02 / 時間</span>
+                <div>
+                    <p class="section-kicker">25年間の変化</p>
+                    <h2>一人暮らしは増え、<span>「夫婦と子ども」の世帯は減ってきた。</span></h2>
+                </div>
+                <p>
+                    1995年から2020年に、単独世帯は41.0%から47.5%へ6.5ポイント上昇した。
+                    一方、「夫婦と子ども」の世帯は29.9%から24.1%へ5.8ポイント低下した。
+                </p>
+            </div>
+
+            <div class="time-layout">
+                <div class="time-chart-card">
+                    <div class="time-series-legend" aria-hidden="true">
+                        <span><i class="legend-single"></i>単独世帯</span>
+                        <span><i class="legend-coupleWithChildren"></i>夫婦と子ども</span>
+                    </div>
+                    <div id="timeChartWrap" class="time-chart-wrap">
+                        <svg id="timeChart" class="time-chart" role="img" aria-label="1995年から2020年までの調布市の単独世帯と夫婦と子どもの世帯割合を示す折れ線グラフ"></svg>
+                    </div>
+                    <p class="time-chart-caption">25年間で、単独世帯は6.5ポイント増え、「夫婦と子ども」の世帯は5.8ポイント減った。</p>
+                    <div id="yearSelector" class="year-selector" role="group" aria-label="表示する国勢調査年"></div>
+                </div>
+
+                <aside class="year-detail" aria-live="polite">
+                    <span id="detailYear" class="detail-year">...年</span>
+                    <div class="detail-stat"><strong id="detailShare">...</strong><span>%</span></div>
+                    <p>単独世帯の割合</p>
+                    <svg id="detailWaffle" class="detail-waffle" viewBox="0 0 223 223" role="img"></svg>
+                    <p id="changeNote" class="change-note">読み込み中</p>
+                    <div class="composition" id="composition" aria-label="世帯類型別構成">
+                        <div id="compositionBar" class="composition-bar" aria-hidden="true"></div>
+                        <dl id="compositionList"></dl>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="conclusion-section">
+            <p class="section-kicker">結論</p>
+            <h2>
+                調布市は、<br>
+                <span>「家族で暮らす郊外の街」だけでは捉えきれない。</span>
+            </h2>
+            <p>
+                2020年には一般世帯の47.5%が単独世帯で、その割合は東京都26市中5位だった。
+                さらに1995年以降、単独世帯が増える一方で「夫婦と子ども」の世帯は減っている。
+                つまり、一人暮らしは例外的な存在ではなく、現在の調布市を形づくる主要な暮らし方の一つである。
+                ただし、47.5%は世帯の割合であり、住民の47.5%という意味ではない。
+            </p>
+        </section>
+
+        <section class="story-section method-section" id="method">
+            <div class="section-heading compact-heading">
+                <span class="section-number">03 / 根拠</span>
+                <div>
+                    <p class="section-kicker">データと出典</p>
+                    <h2>使ったデータと計算方法</h2>
+                </div>
+            </div>
+
+            <div class="method-grid">
+                <article>
+                    <span>DATA 01</span>
+                    <h3>2020年の26市比較</h3>
+                    <p>SSDSE-A-2026の2020年「一般世帯数」「単独世帯数」から割合を算出。東京都内は市のみを抽出し、区・町・村を除いた26市で比較した。</p>
+                    <a href="https://www.nstac.go.jp/use/literacy/ssdse/" target="_blank" rel="noreferrer">統計センター SSDSE ↗</a>
+                </article>
+                <article>
+                    <span>DATA 02</span>
+                    <h3>1995–2020年の推移</h3>
+                    <p>調布市「男女共同参画推進プラン（第5次）」図2-8の国勢調査値を使用。1995-2020年の5年ごとの世帯類型割合を比較した。</p>
+                    <a href="https://www.city.chofu.lg.jp/documents/4712/tyoufushidanjyosannkakusuisinnpuranndai5zi.pdf" target="_blank" rel="noreferrer">調布市 公式資料 ↗</a>
+                </article>
+                <article>
+                    <span>計算と確認</span>
+                    <h3>単独世帯割合</h3>
+                    <p>単独世帯数 ÷ 一般世帯数 × 100で算出。26市の使用項目に欠損はなく、除外や補完は行っていない。</p>
+                </article>
+            </div>
+
+            <div class="source-box">
+                <div>
+                    <span>出典・取得日</span>
+                    <p>独立行政法人 統計センター「SSDSE-市区町村（SSDSE-A-2026）」、調布市「調布市男女共同参画推進プラン（第5次）」／取得日 2026年8月24日</p>
+                </div>
+                <div>
+                    <span>計算式</span>
+                    <p>単独世帯割合 = 単独世帯数 ÷ 一般世帯数 × 100。表示は小数第1位、順位計算は丸め前の値を使用。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <a href="#top">ページ先頭へ ↑</a>
+        </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
 </html>
