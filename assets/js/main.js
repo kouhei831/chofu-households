@@ -599,7 +599,8 @@ function updateTimeHighlight() {
         .attr("class", function(d) { return `time-value time-value-${d.key}`; })
         .attr("x", function(d) { return timeXScale(d.datum.year); })
         .attr("y", function(d) {
-            return timeYScale(d.value) + (d.key === "single" ? -16 : 21);
+            if (d.key === "single") return timeYScale(d.value) - 16;
+            return timeYScale(d.value) + (active.year === 1995 ? 29 : 21);
         })
         .attr("text-anchor", active.year === 2020 ? "end" : (active.year === 1995 ? "start" : "middle"))
         .text(function(d) { return `${d.label} ${d.value.toFixed(1)}%`; });
